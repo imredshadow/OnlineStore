@@ -1,3 +1,4 @@
+
 /*Implement the following functionality into the store:
 
   instance variables: 
@@ -21,7 +22,88 @@
 
     Where these variables are stored and how to name them is up to you!
 */
-public class Store
-{
+import java.util.LinkedList;
 
+public class Store {
+  private double profit;
+  private LinkedList<ItemForSale> items;
+
+  public Store() {
+    profit = 0;
+    items = new LinkedList<ItemForSale>();
+  }
+
+  // Precondition: The Store contains a list of items
+  // Postcondition: All items currently for sale are displayed
+  public void showItems() {
+    for (ItemForSale item : items) {
+      System.out.println(item.getName() + " - $" + item.getPrice());
+    }
+  }
+
+  // Precondition: item is a valid ItemForSale object
+  // Postcondition: item is added to the store's list of items
+  public void addItem(ItemForSale item) {
+    items.add(item);
+  }
+
+  // Precondition: itemName is the name of an item in the store
+  // Postcondition: The matching item is removed and its price is added to profit
+  public void sellItem(String itemName) {
+    for (int i = 0; i < items.size(); i++) {
+      if (items.get(i).getName().equalsIgnoreCase(itemName)) {
+        profit += items.get(i).getPrice();
+        items.remove(i);
+
+        System.out.println(itemName + " was sold.");
+        return;
+      }
+    }
+
+    System.out.println("Item not found.");
+  }
+
+  // Precondition: itemName is the name of an item in the store
+  // Postcondition: The creator of the item is displayed
+  public void creator(String itemName) {
+    for (ItemForSale item : items) {
+      if (item.getName().equalsIgnoreCase(itemName)) {
+        if (item instanceof Book) {
+          Book book = (Book) item;
+          System.out.println(book.getAuthor().getName());
+        } else if (item instanceof Movie) {
+          Movie movie = (Movie) item;
+          System.out.println(movie.getCreator());
+        }
+
+        return;
+      }
+    }
+
+    System.out.println("Item not found.");
+  }
+
+  // Precondition: The Store object exists
+  // Postcondition: Returns the store's current profit
+  public double getProfit() {
+    return profit;
+  }
+
+  // Precondition: profit is a valid double value
+  // Postcondition: The store's profit is changed to profit
+  public void setProfit(double profit) {
+    this.profit = profit;
+  }
+
+  // Precondition: The Store object exists
+  // Postcondition: Returns the LinkedList containing the store's items
+  public LinkedList<ItemForSale> getItems() {
+    return items;
+  }
+
+  // Precondition: items is a valid LinkedList of ItemForSale objects
+  // Postcondition: The store's item list is changed to items
+  public void setItems(LinkedList<ItemForSale> items) {
+    this.items = items;
+  }
 }
